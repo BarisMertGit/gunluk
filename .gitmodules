@@ -1,0 +1,3 @@
+[submodule "gunluk"]
+	path = gunluk
+	url = https://github.com/BarisMertGit/gunluk.git

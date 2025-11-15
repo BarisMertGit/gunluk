@@ -1,0 +1,43 @@
+{
+  "name": "JournalEntry",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the journal entry"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "URL of the uploaded video"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "URL of the video thumbnail"
+    },
+    "mood": {
+      "type": "string",
+      "enum": [
+        "happy",
+        "neutral",
+        "sad",
+        "angry",
+        "excited"
+      ],
+      "description": "User's mood for the day"
+    },
+    "notes": {
+      "type": "string",
+      "description": "User's notes about the day"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location where the entry was created"
+    }
+  },
+  "required": [
+    "date",
+    "video_url",
+    "mood"
+  ]
+}
