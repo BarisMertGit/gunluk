@@ -56,37 +56,29 @@ export default function EntryDetail() {
 
   if (!entry) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-gray-600 mb-4">Entry not found</p>
-        <Button onClick={() => navigate(createPageUrl("MainFeed"))}>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+        <p className="text-gray-500 text-lg mb-6">Entry not found</p>
+        <button
+          onClick={() => navigate(createPageUrl("MainFeed"))}
+          className="bg-gray-900 text-white px-8 py-3 rounded-2xl font-medium hover:bg-gray-800 transition-colors"
+        >
           Go Back
-        </Button>
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
-      <div className="max-w-3xl mx-auto px-4 py-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate(createPageUrl("MainFeed"))}
-            className="rounded-full"
-          >
-            <ArrowLeft className="w-6 h-6" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => deleteEntryMutation.mutate(entry.id)}
-            className="rounded-full text-red-600 hover:text-red-700 hover:bg-red-50"
-          >
-            <Trash2 className="w-5 h-5" />
-          </Button>
-        </div>
+    <div className="px-4 py-6 pb-6">
+      {/* Action Buttons */}
+      <div className="flex items-center justify-end mb-6">
+        <button
+          onClick={() => deleteEntryMutation.mutate(entry.id)}
+          className="p-2 hover:bg-red-50 rounded-lg transition-colors text-red-600"
+        >
+          <Trash2 className="w-5 h-5" />
+        </button>
+      </div>
 
         {/* Video Player */}
         <div className="mb-6">
@@ -135,7 +127,6 @@ export default function EntryDetail() {
               </div>
             </div>
           )}
-        </div>
       </div>
     </div>
   );

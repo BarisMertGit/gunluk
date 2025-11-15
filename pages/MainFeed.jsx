@@ -23,18 +23,18 @@ export default function MainFeed() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="px-4 py-6 pb-6">
       {/* Timeline */}
       <div className="space-y-6">
         {entries.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center">
-              <BookOpen className="w-12 h-12 text-purple-600" />
+          <div className="text-center py-24 px-4">
+            <div className="w-32 h-32 mx-auto mb-8 bg-purple-100 rounded-full flex items-center justify-center">
+              <BookOpen className="w-16 h-16 text-purple-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Start Your Journal</h3>
-            <p className="text-gray-600 mb-6">Capture your memories, one day at a time</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Start Your Journal</h3>
+            <p className="text-gray-500 mb-8 text-lg">Capture your memories, one day at a time</p>
             <Link to={createPageUrl("NewEntry")}>
-              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-8 py-6 text-base">
                 <Plus className="w-5 h-5 mr-2" />
                 Create First Entry
               </Button>
@@ -49,12 +49,11 @@ export default function MainFeed() {
 
       {/* Floating Add Button */}
       <Link to={createPageUrl("NewEntry")}>
-        <Button 
-          size="lg"
-          className="fixed bottom-6 right-6 w-16 h-16 rounded-full shadow-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-110 transition-transform z-50"
+        <button 
+          className="fixed bottom-20 right-6 w-14 h-14 rounded-full shadow-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-105 transition-transform z-40 flex items-center justify-center"
         >
-          <Plus className="w-8 h-8" />
-        </Button>
+          <Plus className="w-7 h-7 text-white" />
+        </button>
       </Link>
     </div>
   );

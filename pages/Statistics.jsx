@@ -78,55 +78,114 @@ export default function Statistics() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="px-4 py-6 pb-6">
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">My Statistics</h2>
-        <p className="text-gray-600">Track your journey and emotional patterns</p>
+        <p className="text-gray-500">Track your journey and emotional patterns</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-3xl p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center">
-              <CalendarIcon className="w-6 h-6 text-purple-600" />
+      <div className="space-y-4 mb-8">
+        <div className="bg-white rounded-3xl p-6 shadow-sm">
+          <div className="flex items-start gap-4 mb-3">
+            <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <CalendarIcon className="w-7 h-7 text-purple-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-gray-500 mb-1">Total Entries</p>
+              <p className="text-4xl font-bold text-gray-900">{entries.length}</p>
             </div>
           </div>
-          <p className="text-sm text-gray-500 mb-1">Total Entries</p>
-          <p className="text-3xl font-bold text-gray-900">{entries.length}</p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-pink-600" />
+        <div className="bg-white rounded-3xl p-6 shadow-sm">
+          <div className="flex items-start gap-4 mb-3">
+            <div className="w-14 h-14 bg-pink-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <TrendingUp className="w-7 h-7 text-pink-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-gray-500 mb-1">This Month</p>
+              <p className="text-4xl font-bold text-gray-900">
+                {entries.filter(e => {
+                  const entryDate = new Date(e.date);
+                  const now = new Date();
+                  return entryDate.getMonth() === now.getMonth() && entryDate.getFullYear() === now.getFullYear();
+                }).length}
+              </p>
             </div>
           </div>
-          <p className="text-sm text-gray-500 mb-1">This Month</p>
-          <p className="text-3xl font-bold text-gray-900">
-            {entries.filter(e => {
-              const entryDate = new Date(e.date);
-              const now = new Date();
-              return entryDate.getMonth() === now.getMonth() && entryDate.getFullYear() === now.getFullYear();
-            }).length}
-          </p>
         </div>
 
-        <div className="bg-white rounded-3xl p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-yellow-100 rounded-2xl flex items-center justify-center">
-              <Smile className="w-6 h-6 text-yellow-600" />
+        <div className="bg-white rounded-3xl p-6 shadow-sm">
+          <div className="flex items-start gap-4 mb-3">
+            <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <Smile className="w-7 h-7 text-yellow-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-gray-500 mb-1">Most Common</p>
+              <p className="text-4xl font-bold">
+                {moodDistribution.sort((a, b) => b.count - a.count)[0]?.mood || "—"}
+              </p>
             </div>
           </div>
-          <p className="text-sm text-gray-500 mb-1">Most Common</p>
-          <p className="text-3xl font-bold">
-            {moodDistribution.sort((a, b) => b.count - a.count)[0]?.mood || "—"}
-          </p>
+        </div>
+      </div>
+
+      {/* AI Journal Summary */}
+      <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-6 shadow-sm mb-8 overflow-hidden border-2 border-amber-200">
+        {/* Notebook lines effect */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div key={i} className="h-8 border-b border-blue-300" />
+          ))}
+        </div>
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-2xl">✨</span>
+            <h3 className="text-xl font-semibold text-gray-900">Your Story</h3>
+          </div>
+          
+          {entries.length === 0 ? (
+            <p className="text-gray-500 italic text-center py-8">
+              Start writing entries to see your story unfold...
+            </p>
+          ) : (
+            <div className="space-y-4">
+              <div className="prose prose-sm max-w-none">
+                <p className="text-gray-700 leading-relaxed" style={{ fontFamily: "'Caveat', cursive, sans-serif", fontSize: "1.1rem", lineHeight: "1.8" }}>
+                  {entries.slice(0, 5).map((entry, idx) => {
+                    const date = format(new Date(entry.date), "MMMM d");
+                    const moodText = entry.mood === "happy" ? "feeling great" 
+                                    : entry.mood === "sad" ? "going through a tough time"
+                                    : entry.mood === "excited" ? "full of energy"
+                                    : entry.mood === "angry" ? "feeling frustrated"
+                                    : "having a normal day";
+                    
+                    return (
+                      <span key={entry.id}>
+                        {idx > 0 && " ... "}
+                        On <strong>{date}</strong>, I was {moodText}
+                        {entry.notes && `: "${entry.notes.slice(0, 60)}${entry.notes.length > 60 ? "..." : ""}"`}
+                        .
+                      </span>
+                    );
+                  })}
+                  {entries.length > 5 && " ... and many more moments captured."}
+                </p>
+              </div>
+              
+              <div className="flex items-center gap-2 text-sm text-gray-500 italic pt-2 border-t border-amber-200">
+                <span>✍️</span>
+                <span>AI-generated story from your {entries.length} journal entries</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Mood Distribution Chart */}
-      <div className="bg-white rounded-3xl p-6 shadow-lg mb-8">
+      <div className="bg-white rounded-3xl p-6 shadow-sm mb-8">
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Mood Distribution</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={moodDistribution}>
@@ -159,7 +218,7 @@ export default function Statistics() {
       </div>
 
       {/* Activity Heat Map */}
-      <div className="bg-white rounded-3xl p-6 shadow-lg">
+      <div className="bg-white rounded-3xl p-6 shadow-sm">
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Activity Heat Map (Last 90 Days)</h3>
         <div className="grid grid-cols-10 sm:grid-cols-15 md:grid-cols-18 gap-2">
           {activityHeatMap.map((day, index) => (

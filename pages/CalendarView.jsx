@@ -56,34 +56,30 @@ export default function CalendarView() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Header */}
+    <div className="px-4 py-6 pb-6">
+      {/* Month Navigation */}
       <div className="flex items-center justify-between mb-8">
-        <Button
-          variant="ghost"
-          size="icon"
+        <button
           onClick={previousMonth}
-          className="rounded-full"
+          className="p-2 hover:bg-white/50 rounded-lg transition-colors"
         >
-          <ChevronLeft className="w-6 h-6" />
-        </Button>
+          <ChevronLeft className="w-7 h-7 text-gray-900" />
+        </button>
         
         <h2 className="text-2xl font-bold text-gray-900">
           {format(currentDate, "MMMM yyyy")}
         </h2>
         
-        <Button
-          variant="ghost"
-          size="icon"
+        <button
           onClick={nextMonth}
-          className="rounded-full"
+          className="p-2 hover:bg-white/50 rounded-lg transition-colors"
         >
-          <ChevronRight className="w-6 h-6" />
-        </Button>
+          <ChevronRight className="w-7 h-7 text-gray-900" />
+        </button>
       </div>
 
       {/* Calendar Grid */}
-      <div className="bg-white rounded-3xl p-6 shadow-lg">
+      <div className="bg-white rounded-3xl p-6 shadow-sm">
         {/* Day Headers */}
         <div className="grid grid-cols-7 gap-2 mb-4">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
@@ -134,17 +130,17 @@ export default function CalendarView() {
       </div>
 
       {/* Legend */}
-      <div className="mt-6 flex items-center justify-center gap-6 text-sm text-gray-600">
+      <div className="mt-6 flex items-center justify-center gap-6 text-sm text-gray-500">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-purple-100 to-pink-100" />
+          <div className="w-5 h-5 rounded-lg bg-gradient-to-br from-purple-100 to-pink-100" />
           <span>Has Entry</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-gray-50" />
+          <div className="w-5 h-5 rounded-lg bg-gray-50 border border-gray-200" />
           <span>No Entry</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg ring-2 ring-purple-600" />
+          <div className="w-5 h-5 rounded-lg ring-2 ring-purple-600" />
           <span>Today</span>
         </div>
       </div>
