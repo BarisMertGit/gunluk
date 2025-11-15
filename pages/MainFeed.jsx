@@ -50,7 +50,7 @@ export default function MainFeed() {
       {/* Floating Add Button */}
       <Link to={createPageUrl("NewEntry")}>
         <button 
-          className="fixed bottom-20 right-6 w-14 h-14 rounded-full shadow-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-105 transition-transform z-40 flex items-center justify-center"
+          className="fixed bottom-20 right-6 w-14 h-14 rounded-full shadow-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-105 transition-all z-40 flex items-center justify-center"
         >
           <Plus className="w-7 h-7 text-white" />
         </button>

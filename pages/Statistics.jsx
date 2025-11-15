@@ -131,59 +131,6 @@ export default function Statistics() {
         </div>
       </div>
 
-      {/* AI Journal Summary */}
-      <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-6 shadow-sm mb-8 overflow-hidden border-2 border-amber-200">
-        {/* Notebook lines effect */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className="h-8 border-b border-blue-300" />
-          ))}
-        </div>
-        
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-2xl">✨</span>
-            <h3 className="text-xl font-semibold text-gray-900">Your Story</h3>
-          </div>
-          
-          {entries.length === 0 ? (
-            <p className="text-gray-500 italic text-center py-8">
-              Start writing entries to see your story unfold...
-            </p>
-          ) : (
-            <div className="space-y-4">
-              <div className="prose prose-sm max-w-none">
-                <p className="text-gray-700 leading-relaxed" style={{ fontFamily: "'Caveat', cursive, sans-serif", fontSize: "1.1rem", lineHeight: "1.8" }}>
-                  {entries.slice(0, 5).map((entry, idx) => {
-                    const date = format(new Date(entry.date), "MMMM d");
-                    const moodText = entry.mood === "happy" ? "feeling great" 
-                                    : entry.mood === "sad" ? "going through a tough time"
-                                    : entry.mood === "excited" ? "full of energy"
-                                    : entry.mood === "angry" ? "feeling frustrated"
-                                    : "having a normal day";
-                    
-                    return (
-                      <span key={entry.id}>
-                        {idx > 0 && " ... "}
-                        On <strong>{date}</strong>, I was {moodText}
-                        {entry.notes && `: "${entry.notes.slice(0, 60)}${entry.notes.length > 60 ? "..." : ""}"`}
-                        .
-                      </span>
-                    );
-                  })}
-                  {entries.length > 5 && " ... and many more moments captured."}
-                </p>
-              </div>
-              
-              <div className="flex items-center gap-2 text-sm text-gray-500 italic pt-2 border-t border-amber-200">
-                <span>✍️</span>
-                <span>AI-generated story from your {entries.length} journal entries</span>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* Mood Distribution Chart */}
       <div className="bg-white rounded-3xl p-6 shadow-sm mb-8">
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Mood Distribution</h3>
