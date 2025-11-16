@@ -55,39 +55,72 @@ export default function YourStory() {
             
             <div className="relative z-10">
               <div className="prose prose-lg max-w-none">
-                <p className="text-gray-800 leading-relaxed" style={{ 
-                  fontFamily: "'Caveat', cursive, sans-serif", 
-                  fontSize: "1.3rem", 
-                  lineHeight: "2" 
-                }}>
+                <p
+                  className="text-gray-800 leading-relaxed"
+                  style={{
+                    fontFamily: "'Caveat', cursive, sans-serif",
+                    fontSize: "1.3rem",
+                    lineHeight: "2",
+                  }}
+                >
                   {entries.slice(0, 8).map((entry, idx) => {
-                    const date = format(new Date(entry.date), language === 'tr' ? "d MMMM" : "MMMM d");
-                    const moodText = entry.mood === "happy" ? (language === 'tr' ? "harika hissediyordum" : "feeling great")
-                                    : entry.mood === "sad" ? (language === 'tr' ? "zor zamanlar geçiriyordum" : "going through a tough time")
-                                    : entry.mood === "excited" ? (language === 'tr' ? "enerji doluydum" : "full of energy")
-                                    : entry.mood === "angry" ? (language === 'tr' ? "sinirliydim" : "feeling frustrated")
-                                    : (language === 'tr' ? "normal bir gün geçiriyordum" : "having a normal day");
-                    
+                    const date = format(
+                      new Date(entry.date),
+                      language === "tr" ? "d MMMM" : "MMMM d"
+                    );
+
+                    const moodPhraseTr =
+                      entry.mood === "happy"
+                        ? "günün genelinde içimde hafif bir sevinç taşıyordum"
+                        : entry.mood === "sad"
+                        ? "içimde taşıdığım ağırlık günün tonunu belirliyordu"
+                        : entry.mood === "excited"
+                        ? "heyecanlı, hareketli ve beklentilerle dolu bir gün geçirdim"
+                        : entry.mood === "angry"
+                        ? "bazı şeyler canımı sıkmış ve beni huzursuz etmişti"
+                        : "sakin, çok iniş çıkışı olmayan bir gün yaşadım";
+
+                    const moodPhraseEn =
+                      entry.mood === "happy"
+                        ? "there was a quiet joy running through the whole day"
+                        : entry.mood === "sad"
+                        ? "a certain heaviness in my chest colored most moments"
+                        : entry.mood === "excited"
+                        ? "the day felt fast, vibrant and full of expectation"
+                        : entry.mood === "angry"
+                        ? "a few things got under my skin and made me restless"
+                        : "it was a calm, steady day without big ups or downs";
+
+                    const noteSnippet = entry.notes
+                      ? entry.notes.slice(0, 120) +
+                        (entry.notes.length > 120 ? "..." : "")
+                      : "";
+
                     return (
                       <span key={entry.id}>
-                        {idx > 0 && " ... "}
-                        {language === 'tr' ? (
+                        {idx > 0 && " "}
+                        {language === "tr" ? (
                           <>
-                            <strong>{date}</strong> günü {moodText}
-                            {entry.notes && `: "${entry.notes.slice(0, 80)}${entry.notes.length > 80 ? "..." : ""}"`}
-                            .
+                            <strong>{date}</strong> günü, {moodPhraseTr}.
+                            {noteSnippet
+                              ? ` Günlüğüme şöyle not etmişim: "${noteSnippet}".`
+                              : " Detaylı bir şey yazmamış olsam da hislerim her şeyi anlatıyor."}
                           </>
                         ) : (
                           <>
-                            On <strong>{date}</strong>, I was {moodText}
-                            {entry.notes && `: "${entry.notes.slice(0, 80)}${entry.notes.length > 80 ? "..." : ""}"`}
-                            .
+                            On <strong>{date}</strong>, {moodPhraseEn}.
+                            {noteSnippet
+                              ? ` In my journal I wrote: "${noteSnippet}".`
+                              : " I didn’t write much detail, but the mood itself says a lot."}
                           </>
                         )}
                       </span>
                     );
                   })}
-                  {entries.length > 8 && (language === 'tr' ? " ... ve daha nice anı kaydedildi." : " ... and many more moments captured.")}
+                  {entries.length > 8 &&
+                    (language === "tr"
+                      ? " Ve satırlara sığmayan daha pek çok anı var."
+                      : " And there are many more moments that don’t even fit in these lines.")}
                 </p>
               </div>
               
