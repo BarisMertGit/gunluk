@@ -28,6 +28,9 @@ export default function EntryDetail() {
   const queryClient = useQueryClient();
   const urlParams = new URLSearchParams(window.location.search);
   const entryId = urlParams.get('id');
+  const isPremium =
+    typeof window !== "undefined" &&
+    window.localStorage.getItem("is_premium") === "true";
 
   const { data: entry, isLoading } = useQuery({
     queryKey: ['journalEntry', entryId],
@@ -43,6 +46,28 @@ export default function EntryDetail() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['journalEntries'] });
       navigate(createPageUrl("MainFeed"));
+    },
+  });
+
+  const analyzeEntryMutation = useMutation({
+    mutationFn: async () => {
+      const fileUrl = entry?.video_url || entry?.audio_url;
+      const type = entry?.video_url ? "video" : "audio";
+      if (!fileUrl) {
+        throw new Error("No media to analyze");
+      }
+      const { analysis } = await base44.integrations.AI.AnalyzeFile({
+        file_url: fileUrl,
+        type,
+      });
+      await base44.entities.JournalEntry.update(entry.id, {
+        ai_analysis: analysis,
+      });
+      return analysis;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['journalEntry', entryId] });
+      queryClient.invalidateQueries({ queryKey: ['journalEntries'] });
     },
   });
 
@@ -82,11 +107,19 @@ export default function EntryDetail() {
 
         {/* Video Player */}
         <div className="mb-6">
-          <video
-            src={entry.video_url}
-            controls
-            className="w-full aspect-video rounded-3xl bg-black shadow-2xl"
-          />
+          {entry.video_url ? (
+            <video
+              src={entry.video_url}
+              controls
+              className="w-full aspect-video rounded-3xl bg-black shadow-2xl"
+            />
+          ) : entry.audio_url ? (
+            <audio
+              src={entry.audio_url}
+              controls
+              className="w-full"
+            />
+          ) : null}
         </div>
 
         {/* Entry Details */}
@@ -114,6 +147,33 @@ export default function EntryDetail() {
               <p className="text-sm font-medium text-gray-700 mb-2">Notes</p>
               <div className="bg-gray-50 rounded-2xl p-4">
                 <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{entry.notes}</p>
+              </div>
+            </div>
+          )}
+
+          {(entry.video_url || entry.audio_url) && (
+            <div>
+              <Button
+                onClick={() => {
+                  if (!isPremium) {
+                    alert("This feature is only available for premium users.");
+                    return;
+                  }
+                  analyzeEntryMutation.mutate();
+                }}
+                disabled={analyzeEntryMutation.isPending}
+                className="mt-2"
+              >
+                {analyzeEntryMutation.isPending ? "Analyzing..." : "Analyze with AI"}
+              </Button>
+            </div>
+          )}
+
+          {entry.ai_analysis && (
+            <div>
+              <p className="text-sm font-medium text-gray-700 mb-2">AI Analysis</p>
+              <div className="bg-gray-50 rounded-2xl p-4">
+                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{entry.ai_analysis}</p>
               </div>
             </div>
           )}

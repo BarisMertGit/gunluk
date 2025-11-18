@@ -17,6 +17,7 @@ function saveEntries(entries) {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
   } catch (e) {
     console.error("Failed to save entries to localStorage", e);
+    throw e;
   }
 }
 
@@ -70,6 +71,19 @@ export const base44 = {
         saveEntries(entriesCache);
         return entry;
       },
+      async update(id, data) {
+        entriesCache = loadEntries();
+        let updatedEntry = null;
+        entriesCache = entriesCache.map((entry) => {
+          if (entry.id === id) {
+            updatedEntry = { ...entry, ...data };
+            return updatedEntry;
+          }
+          return entry;
+        });
+        saveEntries(entriesCache);
+        return updatedEntry;
+      },
       async delete(id) {
         entriesCache = loadEntries();
         entriesCache = entriesCache.filter((entry) => entry.id !== id);
@@ -85,6 +99,19 @@ export const base44 = {
         }
         const file_url = await readFileAsDataUrl(file);
         return { file_url };
+      },
+    },
+    AI: {
+      async AnalyzeFile({ file_url, type }) {
+        if (!file_url) {
+          throw new Error("file_url is required for analysis");
+        }
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        const analysis =
+          type === "audio"
+            ? "AI analysis for this audio will be shown here. Connect this to your real AI service."
+            : "AI analysis for this media will be shown here. Connect this to your real AI service.";
+        return { analysis };
       },
     },
   },

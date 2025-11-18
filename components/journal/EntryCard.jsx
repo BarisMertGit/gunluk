@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { format } from "date-fns";
-import { Play } from "lucide-react";
+import { Play, Mic } from "lucide-react";
 
 const moodEmojis = {
   happy: "😊",
@@ -22,16 +22,26 @@ export default function EntryCard({ entry }) {
     >
       {/* Video Thumbnail */}
       <div className="relative aspect-video bg-gray-900">
-        <video
-          src={entry.video_url}
-          className="w-full h-full object-cover"
-          preload="metadata"
-        />
-        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-          <div className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center">
-            <Play className="w-8 h-8 text-gray-900 ml-1" />
+        {entry.video_url ? (
+          <>
+            <video
+              src={entry.video_url}
+              className="w-full h-full object-cover"
+              preload="metadata"
+            />
+            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+              <div className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <Play className="w-8 h-8 text-gray-900 ml-1" />
+              </div>
+            </div>
+          </>
+        ) : entry.audio_url ? (
+          <div className="w-full h-full flex items-center justify-center">
+            <div className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+              <Mic className="w-8 h-8 text-gray-900" />
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
 
       {/* Content */}
