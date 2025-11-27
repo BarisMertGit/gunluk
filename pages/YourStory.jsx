@@ -19,19 +19,43 @@ export default function YourStory() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-slate-700" />
       </div>
     );
   }
+
+  // Helper to find most common mood
+  const getMostCommonMood = () => {
+    if (entries.length === 0) return null;
+
+    const moodCounts = entries.reduce((acc, e) => {
+      acc[e.mood] = (acc[e.mood] || 0) + 1;
+      return acc;
+    }, {});
+
+    const sortedMoods = Object.entries(moodCounts).sort((a, b) => b[1] - a[1]);
+    return sortedMoods[0]?.[0];
+  };
+
+  const mostCommonMood = getMostCommonMood();
+
+  const getMoodEmoji = (mood) => {
+    switch (mood) {
+      case "happy": return "🐵"; // Happy Monkey
+      case "sad": return "🙈"; // See-no-evil Monkey
+      case "excited": return "🙉"; // Hear-no-evil Monkey
+      case "angry": return "🦍"; // Gorilla
+      default: return "🐒"; // Standard Monkey
+    }
+  };
 
   return (
     <div className="px-4 py-6 pb-6">
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <Sparkles className="w-8 h-8 text-purple-600" />
-          <h2 className="text-3xl font-bold text-gray-900">{t.yourStory}</h2>
+          <Sparkles className="w-8 h-8 text-slate-700" />
+          <h2 className="text-3xl font-bold text-white">{t.yourStory}</h2>
         </div>
-        <p className="text-gray-500">{language === 'tr' ? 'Yapay zeka ile oluşturulmuş hikayem' : 'AI-powered narrative from my journal'}</p>
       </div>
 
       {entries.length === 0 ? (
@@ -39,8 +63,8 @@ export default function YourStory() {
           <div className="w-32 h-32 mx-auto mb-8 bg-amber-100 rounded-full flex items-center justify-center">
             <Sparkles className="w-16 h-16 text-amber-600" />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">{language === 'tr' ? 'Hikayeni Başlat' : 'Begin Your Story'}</h3>
-          <p className="text-gray-500 text-lg">{t.startWriting}</p>
+          <h3 className="text-2xl font-bold text-white mb-3">{language === 'tr' ? 'Hikayeni Başlat' : 'Begin Your Story'}</h3>
+          <p className="text-gray-200 text-lg">{t.startWriting}</p>
         </div>
       ) : (
         <div className="space-y-6">
@@ -52,11 +76,11 @@ export default function YourStory() {
                 <div key={i} className="h-8 border-b border-blue-300" />
               ))}
             </div>
-            
+
             <div className="relative z-10">
               <div className="prose prose-lg max-w-none">
                 <p
-                  className="text-gray-800 leading-relaxed"
+                  className="text-gray-900 leading-relaxed"
                   style={{
                     fontFamily: "'Caveat', cursive, sans-serif",
                     fontSize: "1.3rem",
@@ -73,27 +97,27 @@ export default function YourStory() {
                       entry.mood === "happy"
                         ? "günün genelinde içimde hafif bir sevinç taşıyordum"
                         : entry.mood === "sad"
-                        ? "içimde taşıdığım ağırlık günün tonunu belirliyordu"
-                        : entry.mood === "excited"
-                        ? "heyecanlı, hareketli ve beklentilerle dolu bir gün geçirdim"
-                        : entry.mood === "angry"
-                        ? "bazı şeyler canımı sıkmış ve beni huzursuz etmişti"
-                        : "sakin, çok iniş çıkışı olmayan bir gün yaşadım";
+                          ? "içimde taşıdığım ağırlık günün tonunu belirliyordu"
+                          : entry.mood === "excited"
+                            ? "heyecanlı, hareketli ve beklentilerle dolu bir gün geçirdim"
+                            : entry.mood === "angry"
+                              ? "bazı şeyler canımı sıkmış ve beni huzursuz etmişti"
+                              : "sakin, çok iniş çıkışı olmayan bir gün yaşadım";
 
                     const moodPhraseEn =
                       entry.mood === "happy"
                         ? "there was a quiet joy running through the whole day"
                         : entry.mood === "sad"
-                        ? "a certain heaviness in my chest colored most moments"
-                        : entry.mood === "excited"
-                        ? "the day felt fast, vibrant and full of expectation"
-                        : entry.mood === "angry"
-                        ? "a few things got under my skin and made me restless"
-                        : "it was a calm, steady day without big ups or downs";
+                          ? "a certain heaviness in my chest colored most moments"
+                          : entry.mood === "excited"
+                            ? "the day felt fast, vibrant and full of expectation"
+                            : entry.mood === "angry"
+                              ? "a few things got under my skin and made me restless"
+                              : "it was a calm, steady day without big ups or downs";
 
                     const noteSnippet = entry.notes
                       ? entry.notes.slice(0, 120) +
-                        (entry.notes.length > 120 ? "..." : "")
+                      (entry.notes.length > 120 ? "..." : "")
                       : "";
 
                     return (
@@ -123,11 +147,11 @@ export default function YourStory() {
                       : " And there are many more moments that don’t even fit in these lines.")}
                 </p>
               </div>
-              
+
               <div className="flex items-center gap-2 text-sm text-gray-500 italic pt-4 mt-4 border-t border-amber-200">
                 <span>✍️</span>
                 <span>
-                  {language === 'tr' 
+                  {language === 'tr'
                     ? `${entries.length} ${t.journalEntries} ${t.aiGenerated}`
                     : `${t.aiGenerated} ${entries.length} ${t.journalEntries}`
                   }
@@ -154,54 +178,7 @@ export default function YourStory() {
             </div>
             <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
               <p className="text-2xl">
-                {entries.reduce((acc, e) => {
-                  acc[e.mood] = (acc[e.mood] || 0) + 1;
-                  return acc;
-                }, {})[
-                  Object.entries(entries.reduce((acc, e) => {
-                    acc[e.mood] = (acc[e.mood] || 0) + 1;
-                    return acc;
-                  }, {})).sort((a, b) => b[1] - a[1])[0]?.[0]
-                ] ? 
-                  (entries.reduce((acc, e) => {
-                    acc[e.mood] = (acc[e.mood] || 0) + 1;
-                    return acc;
-                  }, {})[
-                    Object.entries(entries.reduce((acc, e) => {
-                      acc[e.mood] = (acc[e.mood] || 0) + 1;
-                      return acc;
-                    }, {})).sort((a, b) => b[1] - a[1])[0]?.[0]
-                  ] === "happy" ? "😊" 
-                  : entries.reduce((acc, e) => {
-                    acc[e.mood] = (acc[e.mood] || 0) + 1;
-                    return acc;
-                  }, {})[
-                    Object.entries(entries.reduce((acc, e) => {
-                      acc[e.mood] = (acc[e.mood] || 0) + 1;
-                      return acc;
-                    }, {})).sort((a, b) => b[1] - a[1])[0]?.[0]
-                  ] === "sad" ? "😢"
-                  : entries.reduce((acc, e) => {
-                    acc[e.mood] = (acc[e.mood] || 0) + 1;
-                    return acc;
-                  }, {})[
-                    Object.entries(entries.reduce((acc, e) => {
-                      acc[e.mood] = (acc[e.mood] || 0) + 1;
-                      return acc;
-                    }, {})).sort((a, b) => b[1] - a[1])[0]?.[0]
-                  ] === "excited" ? "✨"
-                  : entries.reduce((acc, e) => {
-                    acc[e.mood] = (acc[e.mood] || 0) + 1;
-                    return acc;
-                  }, {})[
-                    Object.entries(entries.reduce((acc, e) => {
-                      acc[e.mood] = (acc[e.mood] || 0) + 1;
-                      return acc;
-                    }, {})).sort((a, b) => b[1] - a[1])[0]?.[0]
-                  ] === "angry" ? "😠"
-                  : "😐")
-                  : "—"
-                }
+                {mostCommonMood ? getMoodEmoji(mostCommonMood) : "—"}
               </p>
               <p className="text-xs text-gray-500 mt-1">{t.mostCommon}</p>
             </div>

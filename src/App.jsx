@@ -10,6 +10,7 @@ import EntryDetail from "../pages/EntryDetail.jsx";
 import Statistics from "../pages/Statistics.jsx";
 import YourStory from "../pages/YourStory.jsx";
 import Settings from "../pages/Settings.jsx";
+import Login from "../pages/Login.jsx";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +29,8 @@ export default function App() {
                 <Route path="/entry" element={<Layout><EntryDetail /></Layout>} />
                 <Route path="/stats" element={<Layout><Statistics /></Layout>} />
                 <Route path="/story" element={<Layout><YourStory /></Layout>} />
-                <Route path="/settings" element={<Layout><Settings /></Layout>} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </div>

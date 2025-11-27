@@ -72,7 +72,7 @@ export default function Statistics() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-slate-700" />
       </div>
     );
   }
@@ -88,8 +88,8 @@ export default function Statistics() {
       <div className="space-y-4 mb-8">
         <div className="bg-white rounded-3xl p-6 shadow-sm">
           <div className="flex items-start gap-4 mb-3">
-            <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-              <CalendarIcon className="w-7 h-7 text-purple-600" />
+            <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <CalendarIcon className="w-7 h-7 text-slate-700" />
             </div>
             <div className="flex-1">
               <p className="text-sm text-gray-500 mb-1">Total Entries</p>
@@ -187,7 +187,7 @@ export default function Statistics() {
             <div className="w-4 h-4 rounded bg-gray-200" />
             <div className="w-4 h-4 rounded bg-blue-200" />
             <div className="w-4 h-4 rounded bg-blue-400" />
-            <div className="w-4 h-4 rounded bg-blue-600" />
+            <div className="w-4 h-4 rounded bg-slate-700" />
           </div>
           <span>More</span>
         </div>

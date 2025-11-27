@@ -24,11 +24,21 @@ export function SettingsProvider({ children }) {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  const [isPremium, setIsPremium] = useState(() => {
+    return localStorage.getItem("app_premium") === "true";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("app_premium", isPremium);
+  }, [isPremium]);
+
   const value = {
     language,
     setLanguage,
     theme,
     setTheme,
+    isPremium,
+    setIsPremium,
   };
 
   return (

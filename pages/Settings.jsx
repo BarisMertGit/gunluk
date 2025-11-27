@@ -1,130 +1,91 @@
 import React from "react";
 import { useSettings } from "@/contexts/SettingsContext";
-import { translations } from "@/locales/translations";
-import { Settings as SettingsIcon, Globe, Palette, Sun, Moon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Crown, Smartphone, ShieldCheck, RefreshCw } from "lucide-react";
+import { createPageUrl } from "@/utils";
 
 export default function Settings() {
-  const { language, setLanguage, theme, setTheme } = useSettings();
-  const t = translations[language];
+  const { isPremium, setIsPremium } = useSettings();
+  const navigate = useNavigate();
 
   return (
-    <div className="px-4 py-6 pb-6">
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <SettingsIcon className="w-8 h-8 text-purple-600" />
-          <h2 className="text-3xl font-bold text-gray-900">{t.settings}</h2>
+    <div className="min-h-screen bg-black text-white p-6">
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-8">
+        <button
+          onClick={() => navigate(createPageUrl("MainFeed"))}
+          className="p-2 bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
+        >
+          <ArrowLeft className="w-6 h-6" />
+        </button>
+        <h1 className="text-2xl font-bold">Settings</h1>
+      </div>
+
+      {/* Premium Section */}
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-6 mb-6 border border-gray-700">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-yellow-500/20 rounded-full flex items-center justify-center">
+            <Crown className="w-6 h-6 text-yellow-500" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-white">Premium Access</h2>
+            <p className="text-gray-400 text-sm">Unlock unlimited video recording</p>
+          </div>
         </div>
-        <p className="text-gray-500">
-          {language === 'tr' ? 'Uygulama tercihlerini özelleştir' : 'Customize your app preferences'}
+
+        <div className="space-y-3">
+          <button
+            onClick={() => setIsPremium(!isPremium)}
+            className={`w-full py-3 rounded-xl font-semibold transition-all ${isPremium
+              ? "bg-green-600 text-white"
+              : "bg-white text-black hover:bg-gray-200"
+              }`}
+          >
+            {isPremium ? "Premium Active (Tap to Disable)" : "Get Premium"}
+          </button>
+
+          <button className="w-full py-3 bg-gray-800 text-gray-300 rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-gray-700 transition-colors">
+            <RefreshCw className="w-4 h-4" />
+            Restore Purchases
+          </button>
+        </div>
+      </div>
+
+      {/* Account Section */}
+      <div className="bg-gray-900 rounded-3xl p-6 mb-6 border border-gray-800">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <ShieldCheck className="w-5 h-5 text-blue-500" />
+          Account
+        </h3>
+        <button
+          onClick={() => navigate(createPageUrl("Login"))}
+          className="w-full py-3 bg-slate-700 text-white rounded-xl font-medium mb-3 hover:bg-blue-700 transition-colors"
+        >
+          Sign In / Sign Up
+        </button>
+        <p className="text-xs text-gray-500 text-center">
+          Sync your journal across devices
         </p>
       </div>
 
-      <div className="space-y-4">
-        {/* Language Section */}
-        <div className="bg-white rounded-3xl p-6 shadow-sm">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-              <Globe className="w-5 h-5 text-blue-600" />
+      {/* App Stores */}
+      <div className="text-center mt-12">
+        <p className="text-gray-500 mb-4 text-sm">Download our mobile app</p>
+        <div className="flex justify-center gap-4">
+          <div className="bg-gray-800 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-700">
+            <Smartphone className="w-5 h-5 text-gray-400" />
+            <div className="text-left">
+              <p className="text-[10px] text-gray-400 leading-none">Download on the</p>
+              <p className="text-sm font-bold text-white">App Store</p>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900">{t.language}</h3>
           </div>
-          
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              onClick={() => setLanguage('en')}
-              className={`p-4 rounded-2xl border-2 transition-all ${
-                language === 'en'
-                  ? 'border-purple-600 bg-purple-50'
-                  : 'border-gray-200 bg-gray-50 hover:border-gray-300'
-              }`}
-            >
-              <div className="text-center">
-                <p className="text-2xl mb-1">🇬🇧</p>
-                <p className={`text-sm font-medium ${
-                  language === 'en' ? 'text-purple-600' : 'text-gray-700'
-                }`}>
-                  English
-                </p>
-              </div>
-            </button>
-
-            <button
-              onClick={() => setLanguage('tr')}
-              className={`p-4 rounded-2xl border-2 transition-all ${
-                language === 'tr'
-                  ? 'border-purple-600 bg-purple-50'
-                  : 'border-gray-200 bg-gray-50 hover:border-gray-300'
-              }`}
-            >
-              <div className="text-center">
-                <p className="text-2xl mb-1">🇹🇷</p>
-                <p className={`text-sm font-medium ${
-                  language === 'tr' ? 'text-purple-600' : 'text-gray-700'
-                }`}>
-                  Türkçe
-                </p>
-              </div>
-            </button>
-          </div>
-        </div>
-
-        {/* Appearance Section */}
-        <div className="bg-white rounded-3xl p-6 shadow-sm">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
-              <Palette className="w-5 h-5 text-purple-600" />
+          <div className="bg-gray-800 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-700">
+            <Smartphone className="w-5 h-5 text-gray-400" />
+            <div className="text-left">
+              <p className="text-[10px] text-gray-400 leading-none">GET IT ON</p>
+              <p className="text-sm font-bold text-white">Google Play</p>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900">{t.appearance}</h3>
           </div>
-          
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              onClick={() => setTheme('light')}
-              className={`p-4 rounded-2xl border-2 transition-all ${
-                theme === 'light'
-                  ? 'border-purple-600 bg-purple-50'
-                  : 'border-gray-200 bg-gray-50 hover:border-gray-300'
-              }`}
-            >
-              <div className="text-center">
-                <Sun className={`w-8 h-8 mx-auto mb-2 ${
-                  theme === 'light' ? 'text-purple-600' : 'text-gray-400'
-                }`} />
-                <p className={`text-sm font-medium ${
-                  theme === 'light' ? 'text-purple-600' : 'text-gray-700'
-                }`}>
-                  {t.lightMode}
-                </p>
-              </div>
-            </button>
-
-            <button
-              onClick={() => setTheme('dark')}
-              className={`p-4 rounded-2xl border-2 transition-all ${
-                theme === 'dark'
-                  ? 'border-purple-600 bg-purple-50'
-                  : 'border-gray-200 bg-gray-50 hover:border-gray-300'
-              }`}
-            >
-              <div className="text-center">
-                <Moon className={`w-8 h-8 mx-auto mb-2 ${
-                  theme === 'dark' ? 'text-purple-600' : 'text-gray-400'
-                }`} />
-                <p className={`text-sm font-medium ${
-                  theme === 'dark' ? 'text-purple-600' : 'text-gray-700'
-                }`}>
-                  {t.darkMode}
-                </p>
-              </div>
-            </button>
-          </div>
-        </div>
-
-        {/* App Info */}
-        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-6 text-center">
-          <p className="text-2xl mb-2">📖</p>
-          <p className="text-sm font-semibold text-gray-900">{t.appName}</p>
-          <p className="text-xs text-gray-500 mt-1">Version 1.0.0</p>
         </div>
       </div>
     </div>

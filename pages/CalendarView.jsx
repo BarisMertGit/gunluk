@@ -50,7 +50,7 @@ export default function CalendarView() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-slate-700" />
       </div>
     );
   }
@@ -65,11 +65,11 @@ export default function CalendarView() {
         >
           <ChevronLeft className="w-7 h-7 text-gray-900" />
         </button>
-        
+
         <h2 className="text-2xl font-bold text-gray-900">
           {format(currentDate, "MMMM yyyy")}
         </h2>
-        
+
         <button
           onClick={nextMonth}
           className="p-2 hover:bg-white/50 rounded-lg transition-colors"
@@ -100,7 +100,7 @@ export default function CalendarView() {
           {calendarDays.map((day, index) => {
             const entry = getEntryForDay(day);
             const isToday = isSameDay(day, new Date());
-            
+
             return (
               <button
                 key={index}
@@ -108,21 +108,16 @@ export default function CalendarView() {
                 className={`
                   aspect-square rounded-2xl flex flex-col items-center justify-center
                   transition-all hover:scale-105
-                  ${entry 
-                    ? 'bg-gradient-to-br from-purple-100 to-pink-100 hover:from-purple-200 hover:to-pink-200' 
+                  ${entry
+                    ? 'bg-gradient-to-br bg-slate-100 hover:from-blue-200 hover:to-pink-200'
                     : 'bg-gray-50 hover:bg-gray-100'
                   }
-                  ${isToday ? 'ring-2 ring-purple-600' : ''}
+                  ${isToday ? 'ring-2 ring-teal-500' : ''}
                 `}
               >
-                <span className={`text-sm font-medium ${isToday ? 'text-purple-600' : 'text-gray-900'}`}>
+                <span className={`text-sm font-medium ${isToday ? 'text-slate-700' : 'text-gray-900'}`}>
                   {format(day, 'd')}
                 </span>
-                {entry && (
-                  <span className="text-2xl mt-1">
-                    {moodEmojis[entry.mood]}
-                  </span>
-                )}
               </button>
             );
           })}
@@ -132,7 +127,7 @@ export default function CalendarView() {
       {/* Legend */}
       <div className="mt-6 flex items-center justify-center gap-6 text-sm text-gray-500">
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-lg bg-gradient-to-br from-purple-100 to-pink-100" />
+          <div className="w-5 h-5 rounded-lg bg-gradient-to-br bg-slate-100" />
           <span>Has Entry</span>
         </div>
         <div className="flex items-center gap-2">
@@ -140,7 +135,7 @@ export default function CalendarView() {
           <span>No Entry</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-lg ring-2 ring-purple-600" />
+          <div className="w-5 h-5 rounded-lg ring-2 ring-teal-500" />
           <span>Today</span>
         </div>
       </div>

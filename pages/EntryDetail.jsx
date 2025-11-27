@@ -74,7 +74,7 @@ export default function EntryDetail() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 animate-spin text-purple-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-slate-700" />
       </div>
     );
   }
@@ -132,7 +132,7 @@ export default function EntryDetail() {
                 {format(new Date(entry.date), "MMMM d, yyyy")}
               </p>
             </div>
-            <div className="flex items-center gap-3 px-4 py-2 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl">
+            <div className="flex items-center gap-3 px-4 py-2 bg-gradient-to-br from-blue-50 to-pink-50 rounded-2xl">
               <span className="text-4xl">{moodEmojis[entry.mood]}</span>
               <div>
                 <p className="text-xs text-gray-500">Mood</p>
