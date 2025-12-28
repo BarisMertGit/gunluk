@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 export default function App() {
-    const appUrl = 'http://192.168.1.116:5173';
+    const appUrl = 'http://192.168.1.135:5173';
 
     return (
         <SafeAreaView style={styles.container}>
