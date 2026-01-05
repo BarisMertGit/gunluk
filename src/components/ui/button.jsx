@@ -6,7 +6,7 @@ function cn(...classes) {
 
 const variants = {
   default:
-    "bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700",
+    "bg-slate-700 text-white hover:bg-slate-800",
   ghost: "bg-transparent hover:bg-gray-100 text-gray-900",
   secondary: "bg-gray-100 hover:bg-gray-200 text-gray-900",
 };
@@ -26,7 +26,7 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none shadow-sm",
+        "inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none shadow-sm",
         variants[variant] || variants.default,
         sizes[size] || sizes.default,
         className

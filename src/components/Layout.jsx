@@ -13,12 +13,12 @@ export default function Layout({ children }) {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="h-full bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex flex-col">
+    <div className="h-full bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
       {/* Header */}
       <header className="bg-white border-b border-gray-100 flex-shrink-0">
         <div className="px-4 py-3 flex items-center justify-center">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-purple-600" />
+          <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <BookOpen className="w-6 h-6 text-slate-700" />
             {t.appName}
           </h1>
         </div>
@@ -34,61 +34,56 @@ export default function Layout({ children }) {
         <div className="flex items-center justify-around px-2 py-2">
           <button
             onClick={() => navigate("/")}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${
-              isActive("/")
-                ? "text-purple-600"
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${isActive("/")
+                ? "text-slate-700"
                 : "text-gray-500 hover:text-gray-700"
-            }`}
+              }`}
           >
-            <Home className={`w-5 h-5 ${isActive("/") ? "fill-purple-600" : ""}`} />
+            <Home className={`w-5 h-5 ${isActive("/") ? "fill-slate-700" : ""}`} />
             <span className="text-[10px] font-medium">{t.home}</span>
           </button>
 
           <button
             onClick={() => navigate("/calendar")}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${
-              isActive("/calendar")
-                ? "text-purple-600"
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${isActive("/calendar")
+                ? "text-slate-700"
                 : "text-gray-500 hover:text-gray-700"
-            }`}
+              }`}
           >
-            <Calendar className={`w-5 h-5 ${isActive("/calendar") ? "fill-purple-600" : ""}`} />
+            <Calendar className={`w-5 h-5 ${isActive("/calendar") ? "fill-slate-700" : ""}`} />
             <span className="text-[10px] font-medium">{t.calendar}</span>
           </button>
 
           <button
             onClick={() => navigate("/story")}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${
-              isActive("/story")
-                ? "text-purple-600"
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${isActive("/story")
+                ? "text-slate-700"
                 : "text-gray-500 hover:text-gray-700"
-            }`}
+              }`}
           >
-            <Sparkles className={`w-5 h-5 ${isActive("/story") ? "fill-purple-600" : ""}`} />
+            <Sparkles className={`w-5 h-5 ${isActive("/story") ? "fill-slate-700" : ""}`} />
             <span className="text-[10px] font-medium">{t.story}</span>
           </button>
 
           <button
             onClick={() => navigate("/stats")}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${
-              isActive("/stats")
-                ? "text-purple-600"
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${isActive("/stats")
+                ? "text-slate-700"
                 : "text-gray-500 hover:text-gray-700"
-            }`}
+              }`}
           >
-            <BarChart3 className={`w-5 h-5 ${isActive("/stats") ? "fill-purple-600" : ""}`} />
+            <BarChart3 className={`w-5 h-5 ${isActive("/stats") ? "fill-slate-700" : ""}`} />
             <span className="text-[10px] font-medium">{t.stats}</span>
           </button>
 
           <button
             onClick={() => navigate("/settings")}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${
-              isActive("/settings")
-                ? "text-purple-600"
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-xl transition-all ${isActive("/settings")
+                ? "text-slate-700"
                 : "text-gray-500 hover:text-gray-700"
-            }`}
+              }`}
           >
-            <SettingsIcon className={`w-5 h-5 ${isActive("/settings") ? "fill-purple-600" : ""}`} />
+            <SettingsIcon className={`w-5 h-5 ${isActive("/settings") ? "fill-slate-700" : ""}`} />
             <span className="text-[10px] font-medium">{t.settings}</span>
           </button>
         </div>

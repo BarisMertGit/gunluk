@@ -5,12 +5,12 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 import { Loader2, TrendingUp, Calendar as CalendarIcon, Smile } from "lucide-react";
 import { format, subDays, startOfDay, eachDayOfInterval } from "date-fns";
 
-const moodEmojis = {
-  happy: "😊",
-  neutral: "😐",
-  sad: "😢",
-  angry: "😠",
-  excited: "✨"
+const moodLabels = {
+  happy: "Happy",
+  neutral: "Neutral",
+  sad: "Sad",
+  angry: "Angry",
+  excited: "Excited"
 };
 
 const moodColors = {
@@ -45,7 +45,7 @@ export default function Statistics() {
     });
 
     return Object.entries(moodCounts).map(([mood, count]) => ({
-      mood: moodEmojis[mood],
+      mood: moodLabels[mood],
       name: mood.charAt(0).toUpperCase() + mood.slice(1),
       count,
       color: moodColors[mood]
@@ -100,8 +100,8 @@ export default function Statistics() {
 
         <div className="bg-white rounded-3xl p-6 shadow-sm">
           <div className="flex items-start gap-4 mb-3">
-            <div className="w-14 h-14 bg-pink-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-              <TrendingUp className="w-7 h-7 text-pink-600" />
+            <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <TrendingUp className="w-7 h-7 text-slate-600" />
             </div>
             <div className="flex-1">
               <p className="text-sm text-gray-500 mb-1">This Month</p>
@@ -124,7 +124,7 @@ export default function Statistics() {
             <div className="flex-1">
               <p className="text-sm text-gray-500 mb-1">Most Common</p>
               <p className="text-4xl font-bold">
-                {moodDistribution.sort((a, b) => b.count - a.count)[0]?.mood || "—"}
+                {moodDistribution.sort((a, b) => b.count - a.count)[0]?.name || "—"}
               </p>
             </div>
           </div>
@@ -136,21 +136,21 @@ export default function Statistics() {
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Mood Distribution</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={moodDistribution}>
-            <XAxis 
-              dataKey="mood" 
-              tick={{ fontSize: 24 }}
+            <XAxis
+              dataKey="mood"
+              tick={{ fontSize: 12 }}
               axisLine={false}
               tickLine={false}
             />
-            <YAxis 
+            <YAxis
               axisLine={false}
               tickLine={false}
               tick={{ fill: '#9ca3af' }}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                border: 'none', 
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'white',
+                border: 'none',
                 borderRadius: '12px',
                 boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
               }}
@@ -173,8 +173,8 @@ export default function Statistics() {
               key={index}
               className="aspect-square rounded-lg transition-transform hover:scale-125"
               style={{
-                backgroundColor: day.hasEntry 
-                  ? moodColors[day.mood] 
+                backgroundColor: day.hasEntry
+                  ? moodColors[day.mood]
                   : '#f3f4f6'
               }}
               title={`${format(new Date(day.date), 'MMM d, yyyy')}${day.hasEntry ? ` - ${day.mood}` : ' - No entry'}`}

@@ -7,13 +7,7 @@ import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay } from "date-fns";
 
-const moodEmojis = {
-  happy: "😊",
-  neutral: "😐",
-  sad: "😢",
-  angry: "😠",
-  excited: "✨"
-};
+
 
 export default function CalendarView() {
   const navigate = useNavigate();
@@ -109,7 +103,7 @@ export default function CalendarView() {
                   aspect-square rounded-2xl flex flex-col items-center justify-center
                   transition-all hover:scale-105
                   ${entry
-                    ? 'bg-gradient-to-br bg-slate-100 hover:from-blue-200 hover:to-pink-200'
+                    ? 'bg-slate-100 hover:bg-slate-200'
                     : 'bg-gray-50 hover:bg-gray-100'
                   }
                   ${isToday ? 'ring-2 ring-teal-500' : ''}

@@ -1,12 +1,16 @@
 import React from "react";
 import { useSettings } from "@/contexts/SettingsContext";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Crown, Smartphone, ShieldCheck, RefreshCw } from "lucide-react";
+import { ArrowLeft, Crown, Smartphone, ShieldCheck, RefreshCw, Sun, Moon } from "lucide-react";
 import { createPageUrl } from "@/utils";
 
 export default function Settings() {
-  const { isPremium, setIsPremium } = useSettings();
+  const { isPremium, setIsPremium, theme, setTheme } = useSettings();
   const navigate = useNavigate();
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   return (
     <div className="min-h-screen bg-black text-white p-6">
@@ -19,6 +23,37 @@ export default function Settings() {
           <ArrowLeft className="w-6 h-6" />
         </button>
         <h1 className="text-2xl font-bold">Settings</h1>
+      </div>
+
+      {/* Theme Toggle Section */}
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-6 mb-6 border border-gray-700">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-slate-500/20 rounded-full flex items-center justify-center">
+              {theme === "dark" ? (
+                <Moon className="w-6 h-6 text-slate-400" />
+              ) : (
+                <Sun className="w-6 h-6 text-yellow-500" />
+              )}
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">Appearance</h2>
+              <p className="text-gray-400 text-sm">
+                {theme === "dark" ? "Dark Mode" : "Light Mode"}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={toggleTheme}
+            className={`relative w-14 h-8 rounded-full transition-colors ${theme === "dark" ? "bg-slate-600" : "bg-yellow-500"
+              }`}
+          >
+            <div
+              className={`absolute top-1 w-6 h-6 rounded-full bg-white shadow-md transition-transform ${theme === "dark" ? "left-1" : "left-7"
+                }`}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Premium Section */}

@@ -155,7 +155,7 @@ export default function Login() {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full py-4 bg-gradient-to-r bg-slate-700 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:shadow-purple-300 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                            className="w-full py-4 bg-gradient-to-r bg-slate-700 text-white rounded-xl font-bold shadow-lg shadow-slate-200 hover:shadow-slate-300 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
                         >
                             {isLogin ? "Sign In" : "Create Account"}
                             <ArrowRight className="w-5 h-5" />

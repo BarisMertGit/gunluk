@@ -4,12 +4,12 @@ import { createPageUrl } from "@/utils";
 import { format } from "date-fns";
 import { Play, Mic } from "lucide-react";
 
-const moodEmojis = {
-  happy: "😊",
-  neutral: "😐",
-  sad: "😢",
-  angry: "😠",
-  excited: "✨"
+const moodLabels = {
+  happy: "Happy",
+  neutral: "Neutral",
+  sad: "Sad",
+  angry: "Angry",
+  excited: "Excited"
 };
 
 export default function EntryCard({ entry }) {
@@ -51,7 +51,9 @@ export default function EntryCard({ entry }) {
           <h3 className="text-xl font-bold text-gray-900">
             {format(new Date(entry.date), "MMMM d, yyyy")}
           </h3>
-          <span className="text-3xl">{moodEmojis[entry.mood]}</span>
+          <span className="text-sm font-medium text-slate-600 bg-slate-100 px-3 py-1 rounded-full">
+            {moodLabels[entry.mood]}
+          </span>
         </div>
 
         {/* Notes Preview */}

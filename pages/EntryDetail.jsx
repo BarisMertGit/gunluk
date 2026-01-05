@@ -7,14 +7,6 @@ import { ArrowLeft, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 
-const moodEmojis = {
-  happy: "😊",
-  neutral: "😐",
-  sad: "😢",
-  angry: "😠",
-  excited: "✨"
-};
-
 const moodLabels = {
   happy: "Happy",
   neutral: "Neutral",
@@ -105,88 +97,87 @@ export default function EntryDetail() {
         </button>
       </div>
 
-        {/* Video Player */}
-        <div className="mb-6">
-          {entry.video_url ? (
-            <video
-              src={entry.video_url}
-              controls
-              className="w-full aspect-video rounded-3xl bg-black shadow-2xl"
-            />
-          ) : entry.audio_url ? (
-            <audio
-              src={entry.audio_url}
-              controls
-              className="w-full"
-            />
-          ) : null}
-        </div>
+      {/* Video Player */}
+      <div className="mb-6">
+        {entry.video_url ? (
+          <video
+            src={entry.video_url}
+            controls
+            className="w-full aspect-video rounded-3xl bg-black shadow-2xl"
+          />
+        ) : entry.audio_url ? (
+          <audio
+            src={entry.audio_url}
+            controls
+            className="w-full"
+          />
+        ) : null}
+      </div>
 
-        {/* Entry Details */}
-        <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 space-y-6">
-          {/* Date and Mood */}
-          <div className="flex items-center justify-between">
+      {/* Entry Details */}
+      <div className="bg-white/80 backdrop-blur-md rounded-3xl p-6 space-y-6">
+        {/* Date and Mood */}
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm text-gray-500 mb-1">Date</p>
+            <p className="text-2xl font-bold text-gray-900">
+              {format(new Date(entry.date), "MMMM d, yyyy")}
+            </p>
+          </div>
+          <div className="flex items-center gap-3 px-4 py-2 bg-slate-50 rounded-2xl border border-slate-200">
             <div>
-              <p className="text-sm text-gray-500 mb-1">Date</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {format(new Date(entry.date), "MMMM d, yyyy")}
-              </p>
-            </div>
-            <div className="flex items-center gap-3 px-4 py-2 bg-gradient-to-br from-blue-50 to-pink-50 rounded-2xl">
-              <span className="text-4xl">{moodEmojis[entry.mood]}</span>
-              <div>
-                <p className="text-xs text-gray-500">Mood</p>
-                <p className="font-semibold text-gray-900">{moodLabels[entry.mood]}</p>
-              </div>
+              <p className="text-xs text-gray-500">Mood</p>
+              <p className="font-semibold text-slate-800">{moodLabels[entry.mood]}</p>
             </div>
           </div>
+        </div>
 
-          {/* Notes */}
-          {entry.notes && (
-            <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">Notes</p>
-              <div className="bg-gray-50 rounded-2xl p-4">
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{entry.notes}</p>
-              </div>
+        {/* Notes */}
+        {entry.notes && (
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">Notes</p>
+            <div className="bg-gray-50 rounded-2xl p-4">
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{entry.notes}</p>
             </div>
-          )}
+          </div>
+        )}
 
-          {(entry.video_url || entry.audio_url) && (
-            <div>
-              <Button
-                onClick={() => {
-                  if (!isPremium) {
-                    alert("This feature is only available for premium users.");
-                    return;
-                  }
-                  analyzeEntryMutation.mutate();
-                }}
-                disabled={analyzeEntryMutation.isPending}
-                className="mt-2"
-              >
-                {analyzeEntryMutation.isPending ? "Analyzing..." : "Analyze with AI"}
-              </Button>
-            </div>
-          )}
+        {(entry.video_url || entry.audio_url) && (
+          <div>
+            <Button
+              onClick={() => {
+                if (!isPremium) {
+                  alert("This feature is only available for premium users.");
+                  return;
+                }
+                analyzeEntryMutation.mutate();
+              }}
+              disabled={analyzeEntryMutation.isPending}
+              className="mt-2"
+            >
+              {analyzeEntryMutation.isPending ? "Analyzing..." : "Analyze with AI"}
+            </Button>
+          </div>
+        )}
 
-          {entry.ai_analysis && (
-            <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">AI Analysis</p>
-              <div className="bg-gray-50 rounded-2xl p-4">
-                <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{entry.ai_analysis}</p>
-              </div>
+        {entry.ai_analysis && (
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">AI Analysis</p>
+            <div className="bg-gray-50 rounded-2xl p-4">
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{entry.ai_analysis}</p>
             </div>
-          )}
+          </div>
+        )}
 
-          {/* Location */}
-          {entry.location && (
-            <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">Location</p>
-              <div className="bg-gray-50 rounded-2xl p-4">
-                <p className="text-gray-700">{entry.location}</p>
-              </div>
+        {/* Location */}
+        {entry.location && (
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">Location</p>
+            <div className="bg-gray-50 rounded-2xl p-4">
+              <p className="text-gray-700">{entry.location}</p>
             </div>
-          )}
+          </div>
+        )}
       </div>
     </div>
   );

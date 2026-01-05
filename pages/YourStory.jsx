@@ -39,13 +39,13 @@ export default function YourStory() {
 
   const mostCommonMood = getMostCommonMood();
 
-  const getMoodEmoji = (mood) => {
+  const getMoodLabel = (mood) => {
     switch (mood) {
-      case "happy": return "🐵"; // Happy Monkey
-      case "sad": return "🙈"; // See-no-evil Monkey
-      case "excited": return "🙉"; // Hear-no-evil Monkey
-      case "angry": return "🦍"; // Gorilla
-      default: return "🐒"; // Standard Monkey
+      case "happy": return "Happy";
+      case "sad": return "Sad";
+      case "excited": return "Excited";
+      case "angry": return "Angry";
+      default: return "Neutral";
     }
   };
 
@@ -149,7 +149,7 @@ export default function YourStory() {
               </div>
 
               <div className="flex items-center gap-2 text-sm text-gray-500 italic pt-4 mt-4 border-t border-amber-200">
-                <span>✍️</span>
+
                 <span>
                   {language === 'tr'
                     ? `${entries.length} ${t.journalEntries} ${t.aiGenerated}`
@@ -178,7 +178,7 @@ export default function YourStory() {
             </div>
             <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
               <p className="text-2xl">
-                {mostCommonMood ? getMoodEmoji(mostCommonMood) : "—"}
+                {mostCommonMood ? getMoodLabel(mostCommonMood) : "—"}
               </p>
               <p className="text-xs text-gray-500 mt-1">{t.mostCommon}</p>
             </div>
